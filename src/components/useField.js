@@ -2,8 +2,9 @@ import React, { useMemo } from "react";
 import { FormContext } from "./Form";
 
 export function useField(name) {
-  const { values, handleChange } = React.useContext(FormContext);
-  if (values === undefined) {
+  const context = React.useContext(FormContext);
+  const { values, handleChange } = context;
+  if (context === undefined) {
     throw new Error("useField must be used within a Form provider");
   }
   if (name === undefined) {
