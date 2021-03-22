@@ -25,7 +25,7 @@ export const SignaturePage = () => {
           },
           { autoHideDuration: 2000 }
         );
-      }, 5001), //1 milisecond is added to change the order of event loop queue
+      }, 6000), //1000 milisecond is added to change the order of event loop queue
     []
   );
 
