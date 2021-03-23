@@ -2,8 +2,7 @@ import { Container, Typography } from "@material-ui/core";
 import { throttle } from "lodash";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { getAddress, getOwners, saveUser } from "../api";
-import Form from "./Form";
-import FormFields from "./FormFields";
+import SignatureForm from "./SignatureForm";
 import { SignaturePreview } from "./SignaturePreview";
 import { useSnackbarContext } from "./SnackBar";
 
@@ -14,6 +13,7 @@ export const SignaturePage = () => {
   const [userInfo, setUserInfo] = useState(initialValues);
   const [owners, setOwners] = useState([]);
   const [address, setAddress] = useState({});
+
   const saveUserData = useMemo(
     () =>
       throttle(async (data) => {
@@ -29,13 +29,10 @@ export const SignaturePage = () => {
     []
   );
 
-  const handleChange = useCallback(
-    (values) => {
-      setUserInfo(values);
-      saveUserData(values);
-    },
-    [setUserInfo, saveUserData]
-  );
+  const handleChange = useCallback((values) => {
+    setUserInfo(values);
+    saveUserData(values);
+  }, []);
 
   useEffect(() => {
     getOwners().then(setOwners);
@@ -47,9 +44,7 @@ export const SignaturePage = () => {
       <Typography component="h1" variant="h3" gutterBottom>
         Edit your email signature
       </Typography>
-      <Form initialValues={initialValues} onChange={handleChange}>
-        <FormFields />
-      </Form>
+      <SignatureForm initialValues={initialValues} onChange={handleChange} />
       <SignaturePreview {...userInfo} {...{ owners, address }} />
     </Container>
   );
